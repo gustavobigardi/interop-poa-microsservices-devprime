@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  #MongoDB
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    hostname: mongodb
+    ports:
+      - "27017:27017"
+      - "27018:27018"
+      - "27019:27019"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mongoadmin"
+      MONGO_INITDB_ROOT_PASSWORD: "LltF8Nx*yo"
+      MSSQL_PID: "Developer"
+  #RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  #SEQ (Logs)
+  seq:
+    image: datalust/seq
+    container_name: seq
+    hostname: seq
+    ports:
+      - "5341:5341"
+      - "8000:80"
+    environment:
+      SEQ_CACHE_SYSTEMRAMTARGET: 0
+      ACCEPT_EULA: "Y"
+  #Zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    hostname: zipkin
+    ports:
+      - "9411:9411"
+
+networks:
+  interop:
+    driver: bridge
